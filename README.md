@@ -5,7 +5,7 @@
 ### Autors:
 > Vankad24
 >
-> Shura
+> Aulex
 
 ---
 # Powered by VA idea 😁
