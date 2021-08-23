@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#*#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:snow_block"
+    },
+    "*": {
+      "item": "minecraft:redstone_lamp"
+    }
+  },
+  "result": {
+    "item": "magmagic:lampblock"
+  }
+}
