@@ -1,6 +1,9 @@
 package com.magnum.magic;
 
 import com.magnum.magic.blocks.LampBlock;
+import com.magnum.magic.blocks.MagicOreBlock;
+import com.magnum.magic.blocks.MagicStoneBlock;
+import com.magnum.magic.items.MagicDustItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -24,6 +27,11 @@ public class MainMagic {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 
         Register.goToRegistration(new LampBlock(), ItemGroup.BUILDING_BLOCKS);
+        Register.goToRegistration(new MagicStoneBlock(), ItemGroup.BUILDING_BLOCKS);
+        Register.goToRegistration(new MagicOreBlock(),ItemGroup.BUILDING_BLOCKS);
+
+
+        Register.goToRegistration(new MagicDustItem(ItemGroup.MISC));
         //   /give @p magmagic:lamp
 
     }

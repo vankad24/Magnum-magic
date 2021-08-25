@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "magmagic:lampblock"
+          "name": "magmagic:magic_stone_block"
         }
       ],
       "conditions": [

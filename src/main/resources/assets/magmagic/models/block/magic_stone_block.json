@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "magmagic:block/lampblock"
+    "all": "magmagic:block/magic_stone_block"
   }
 }

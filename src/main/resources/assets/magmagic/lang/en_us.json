@@ -1,4 +1,8 @@
 {
-
- "block.magmagic.lampblock": "Lamp block"
+ "shift.info": "Shift for more info",
+ "block.magmagic.lamp_block": "Lamp Block",
+ "block.magmagic.lamp_block.info": "Powered by V idea",
+ "block.magmagic.magic_stone_block":"Magic Stone Block",
+ "item.magmagic.magic_dust_item":"Magic Dust",
+ "block.magmagic.magic_ore":"Magic Ore"
 }
