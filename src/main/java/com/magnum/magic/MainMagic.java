@@ -28,18 +28,18 @@ public class MainMagic {
     MagicItemGroup magicItemGroup = new MagicItemGroup("magicGroup");
 
 
-
     public MainMagic() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
 
-        //Blocks
+        //-------------Blocks-------------
         Register.goToRegistration(new LampBlock(), magicItemGroup);
         Register.goToRegistration(new MagicStoneBlock(), magicItemGroup);
+
         Register.goToRegistration(new MagicOreBlock(),magicItemGroup);
 
 
-        //Items
+        //-------------Items-------------
         Register.goToRegistration(dust = new MagicDustItem(magicItemGroup));
 
 

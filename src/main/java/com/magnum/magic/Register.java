@@ -1,6 +1,7 @@
 package com.magnum.magic;
 
-import com.magnum.magic.blocks.MyBlock;
+import com.magnum.magic.blocks.MyOreBlock;
+import com.magnum.magic.world.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -20,11 +21,15 @@ public class Register {
         items.add(item);
     }
 
-    public static void goToRegistration(MyBlock block, ItemGroup group){
+    public static void goToRegistration(Block block, ItemGroup group){
         blocks.add(block);
         goToRegistration(new BlockItem(block,new Item.Properties().group(group)).setRegistryName(block.getRegistryName()));
     }
 
+    public static void goToRegistration(MyOreBlock ore,ItemGroup group){
+        OreGeneration.setupOreGeneration(ore);
+        goToRegistration((Block) ore,group);
+    }
 
     @SubscribeEvent
     public static void registerItem(final RegistryEvent.Register<Item> event){

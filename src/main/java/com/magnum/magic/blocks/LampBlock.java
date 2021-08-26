@@ -32,6 +32,7 @@ public class LampBlock extends MyBlock{
         if(Screen.hasShiftDown()) tooltip.add(getInfoTextComponent(TextFormatting.DARK_PURPLE));
         else tooltip.add(getShiftInfoTextComponent(TextFormatting.BLUE,TextFormatting.ITALIC));
         super.addInformation(stack, worldIn, tooltip, flagIn);
+//        new StringTextComponent()
         //Screen.hasShiftDown()
         //InputMappings.isKeyDown
         //чекнуть самый низ файла, там все клавиши
