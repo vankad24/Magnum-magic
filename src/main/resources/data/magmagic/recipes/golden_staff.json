@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " #*",
+    " /#",
+    "/  "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gold_block"
+    },
+    "*": {
+      "item": "magmagic:magic_crystal"
+    },
+    "/": {
+      "item": "magmagic:magic_stick"
+    }
+  },
+  "result": {
+    "item": "magmagic:golden_staff"
+  }
+}

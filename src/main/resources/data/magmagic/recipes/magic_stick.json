@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "sticks",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "magmagic:magic_planks"
+    }
+  },
+  "result": {
+    "item": "magmagic:magic_stick",
+    "count": 4
+  }
+}

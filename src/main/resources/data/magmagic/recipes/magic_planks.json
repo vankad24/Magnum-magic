@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "item": "magmagic:magic_log"
+    }
+
+  ],
+  "result": {
+    "item": "magmagic:magic_planks",
+    "count": 4
+  }
+}

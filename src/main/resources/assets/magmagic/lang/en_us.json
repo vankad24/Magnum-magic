@@ -1,9 +1,21 @@
 {
+ "itemGroup.magicGroup": "Magic Tab",
  "shift.info": "Shift for more info",
+ "level": "Level",
+
  "block.magmagic.lamp_block": "Lamp Block",
  "block.magmagic.lamp_block.info": "Powered by V idea",
  "block.magmagic.magic_stone_block":"Magic Stone Block",
- "item.magmagic.magic_dust_item":"Magic Dust",
  "block.magmagic.magic_ore":"Magic Ore",
- "itemGroup.magicGroup": "Magic Tab"
+ "block.magmagic.magic_log":"Magic Log",
+ "block.magmagic.magic_planks":"Magic Planks",
+ "block.magmagic.magic_leaves":"Magic Leaves",
+ "block.magmagic.magic_sapling":"Magic Sapling",
+
+
+
+ "item.magmagic.magic_dust_item":"Magic Dust",
+ "item.magmagic.golden_staff":"Golden Staff",
+ "item.magmagic.magic_stick":"Magic Stick",
+ "item.magmagic.magic_crystal":"Magic Crystal"
 }

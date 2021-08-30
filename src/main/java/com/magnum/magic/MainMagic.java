@@ -1,12 +1,15 @@
 package com.magnum.magic;
 
-import com.magnum.magic.blocks.LampBlock;
-import com.magnum.magic.blocks.MagicOreBlock;
-import com.magnum.magic.blocks.MagicStoneBlock;
-import com.magnum.magic.items.MagicDustItem;
-import com.magnum.magic.items.MyItem;
+import com.magnum.magic.blocks.*;
+import com.magnum.magic.items.*;
+import com.magnum.magic.world.MagicTree;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -18,33 +21,65 @@ import org.apache.logging.log4j.Logger;
 @Mod(MainMagic.MOD_ID)
 public class MainMagic {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public static final String MOD_ID = "magmagic";
     public static final String NAME = "";
     public static final String VERSION = "1.0";
 
     MyItem dust;
-    MagicItemGroup magicItemGroup = new MagicItemGroup("magicGroup");
+    MagicSaplingBlock sapling;
+
+    public static MagicItemGroup magicItemGroup;
 
 
     public MainMagic() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        MinecraftForge.EVENT_BUS.register(this);
+
+        magicItemGroup = new MagicItemGroup("magicGroup");
 
         //-------------Blocks-------------
-        Register.goToRegistration(new LampBlock(), magicItemGroup);
-        Register.goToRegistration(new MagicStoneBlock(), magicItemGroup);
+        Register.goToRegistration(new LampBlock());
+        Register.goToRegistration(new MagicStoneBlock());
+        Register.goToRegistration(new MagicPlanksBlock());
 
-        Register.goToRegistration(new MagicOreBlock(),magicItemGroup);
 
+        MagicLogBlock log = new MagicLogBlock();
+        sapling = new MagicSaplingBlock();
+        MagicLeavesBlock leaves = new MagicLeavesBlock();
+        MagicTree.createConfig(log,leaves,sapling);
+
+        Register.goToRegistration(log);
+        Register.goToRegistration(sapling);
+        Register.goToRegistration(leaves);
+
+        Register.goToRegistration(new MagicOreBlock());
 
         //-------------Items-------------
-        Register.goToRegistration(dust = new MagicDustItem(magicItemGroup));
-
+        Register.goToRegistration(dust = new MagicDustItem());
+        Register.goToRegistration(new GoldenStaffItem());
+        Register.goToRegistration(new MagicStickItem());
+        Register.goToRegistration(new MagicCrystalItem());
 
     }
 
+    @SubscribeEvent
+    public void craft(final PlayerEvent.ItemCraftedEvent event){
+        MainMagic.LOGGER.debug("Craft");
+
+        ItemStack stack = event.getInventory().getStackInSlot(4);
+        MainMagic.LOGGER.debug(stack.getItem().getClass().getSimpleName());
+        if (stack.getItem() instanceof Staff){
+            int oldLevel = stack.getTag().getInt("level");
+            MainMagic.LOGGER.debug(oldLevel+"");
+            Staff.levelUpStaff(event.getCrafting(),oldLevel+1);
+        }
+
+
+
+    }
 
     /* The FMLCommonSetupEvent (FML - Forge Mod Loader)
     * (Recipes)
@@ -58,11 +93,10 @@ public class MainMagic {
      * server doesn't really care about, like rendering layers and other stuff.
      */
     private void clientSetup(final FMLClientSetupEvent event){
-
+        RenderTypeLookup.setRenderLayer(sapling, RenderType.getCutout());
     }
 
     public class MagicItemGroup extends ItemGroup{
-
         public MagicItemGroup(String name) {
             super(name);
         }

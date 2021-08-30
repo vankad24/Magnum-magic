@@ -5,12 +5,12 @@ import com.magnum.magic.world.OreGeneration;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+
 
 @Mod.EventBusSubscriber(modid = MainMagic.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Register {
@@ -21,14 +21,14 @@ public class Register {
         items.add(item);
     }
 
-    public static void goToRegistration(Block block, ItemGroup group){
+    public static void goToRegistration(Block block){
         blocks.add(block);
-        goToRegistration(new BlockItem(block,new Item.Properties().group(group)).setRegistryName(block.getRegistryName()));
+        goToRegistration(new BlockItem(block,new Item.Properties().group(MainMagic.magicItemGroup)).setRegistryName(block.getRegistryName()));
     }
 
-    public static void goToRegistration(MyOreBlock ore,ItemGroup group){
+    public static void goToRegistration(MyOreBlock ore){
         OreGeneration.setupOreGeneration(ore);
-        goToRegistration((Block) ore,group);
+        goToRegistration((Block) ore);
     }
 
     @SubscribeEvent

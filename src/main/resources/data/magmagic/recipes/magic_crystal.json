@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "magmagic:magic_dust_item"
+    },
+{
+      "item": "minecraft:diamond"
+    }
+
+  ],
+  "result": {
+    "item": "magmagic:magic_crystal"
+  }
+}
