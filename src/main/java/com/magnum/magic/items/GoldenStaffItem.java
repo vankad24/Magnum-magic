@@ -8,8 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -17,7 +15,7 @@ import net.minecraft.world.World;
 public class GoldenStaffItem extends Staff{
     public GoldenStaffItem() {
         super(new Item.Properties(),"golden_staff");
-
+        transformToBlock = Blocks.GOLD_BLOCK;
     }
 
 
@@ -34,7 +32,6 @@ public class GoldenStaffItem extends Staff{
 
 
 
-        world.playSound(player, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 1F);
         player.getCooldownTracker().setCooldown(this, 20);
 
         CompoundNBT tag = stack.getTag();
@@ -42,7 +39,8 @@ public class GoldenStaffItem extends Staff{
         if (isClient(world)){
             player.sendMessage(new StringTextComponent("Magic "+level+" level!"));
         }
-        makeMagic(Blocks.GOLD_BLOCK,world,pos,level-1);
+//        new Thread(()->makeMagic(Blocks.GOLD_BLOCK,world,pos,player,level-1)).start();
+        makeMagic(world,pos,player,level);
 
 //        EnderPearlItem
 //        FlintAndSteelItem

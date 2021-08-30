@@ -62,6 +62,7 @@ public class MainMagic {
         Register.goToRegistration(new GoldenStaffItem());
         Register.goToRegistration(new MagicStickItem());
         Register.goToRegistration(new MagicCrystalItem());
+        Register.goToRegistration(new FrozenStaffItem());
 
     }
 
@@ -72,9 +73,11 @@ public class MainMagic {
         ItemStack stack = event.getInventory().getStackInSlot(4);
         MainMagic.LOGGER.debug(stack.getItem().getClass().getSimpleName());
         if (stack.getItem() instanceof Staff){
-            int oldLevel = stack.getTag().getInt("level");
-            MainMagic.LOGGER.debug(oldLevel+"");
-            Staff.levelUpStaff(event.getCrafting(),oldLevel+1);
+            int newLevel = stack.getTag().getInt("level")+1;
+            if (newLevel==5)newLevel=4;
+            MainMagic.LOGGER.debug(newLevel+"");
+            Staff.levelUpStaff(event.getCrafting(),newLevel);
+
         }
 
 

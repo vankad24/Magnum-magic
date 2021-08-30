@@ -10,6 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -18,6 +20,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class Staff extends MyItem{
@@ -25,6 +29,7 @@ public class Staff extends MyItem{
         super(properties.maxStackSize(1), name);
     }
 
+    Block transformToBlock;
     HashMap<Block, Block> blockHashMap;
 
 
@@ -64,13 +69,74 @@ public class Staff extends MyItem{
         if (stack.hasTag()) {
             if (Screen.hasShiftDown()) {
                 tooltip.add(new TranslationTextComponent("level")
-                        .appendText(" " + stack.getTag().getInt("level")).applyTextStyle(TextFormatting.DARK_PURPLE));
+                        .appendText(" "+ stack.getTag().getInt("level")).applyTextStyle(TextFormatting.DARK_PURPLE));
             } else tooltip.add(getShiftInfoTextComponent(TextFormatting.BLUE));
         }
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
-    void makeMagic(Block to, World world, BlockPos centerBlock, int staffLevel){
+    void makeMagic(World world, BlockPos centerBlock, PlayerEntity player, int staffLevel){
+        new Thread(()->{
+            HashSet<BlockPos> validBlocks = new HashSet<>();
+            validBlocks.add(centerBlock);
+            for (int i = 0; i < staffLevel; i++) {
+                Iterator<BlockPos> iterator = validBlocks.iterator();
+                HashSet<BlockPos> temp = new HashSet<>();
+                boolean playSound = false;
+                while (iterator.hasNext()){
+                    BlockPos pos = iterator.next();
+                    if (world.getBlockState(pos).getBlock()!= transformToBlock) {
+                        playSound = true;
+                        world.setBlockState(pos, transformToBlock.getDefaultState());
+                        for (int y = -1; y <= 1; y++) {
+                            for (int x = -1; x <= 1; x++) {
+                                for (int z = -1; z <= 1; z++) {
+                                    addIfValid(temp,pos.add(x,y,z),world);
+                                }
+                            }
+                        }
+                       /* addIfValid(temp,pos.south(),centerBlock,staffLevel,world);
+                        addIfValid(temp,pos.north(),centerBlock,staffLevel,world);
+                        addIfValid(temp,pos.west(),centerBlock,staffLevel,world);
+                        addIfValid(temp,pos.east(),centerBlock,staffLevel,world);
+                        addIfValid(temp,pos.up(),centerBlock,staffLevel,world);
+                        addIfValid(temp,pos.down(),centerBlock,staffLevel,world);*/
+
+                    }
+                    validBlocks = temp;
+                }
+                if (playSound)world.playSound(player, centerBlock, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 1F);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        }).start();
+
+    }
+
+    void addIfValid(HashSet<BlockPos> set, BlockPos pos, World world){
+        if (!set.contains(pos)&&!isNotSolid(world,pos)){
+            if (isNotSolid(world,pos.south())|| isNotSolid(world,pos.north())||
+                    isNotSolid(world,pos.west())|| isNotSolid(world,pos.east())||
+                    isNotSolid(world,pos.up()) || isNotSolid(world,pos.down()))set.add(pos);
+        }
+    }
+
+    boolean isNotSolid(World world, BlockPos pos){
+        Material material = world.getBlockState(pos).getMaterial();
+        return material == Material.AIR||material==Material.WATER||material==Material.LAVA;
+    }
+
+    boolean isAir(World world, BlockPos pos){
+        return world.getBlockState(pos).getMaterial() == Material.AIR;
+    }
+
+
+    void makeMagicOld(Block to, World world, BlockPos centerBlock, PlayerEntity player, int staffLevel){
 //        MainMagic.LOGGER.debug();
 //        BoneMealItem
 
@@ -84,6 +150,12 @@ public class Staff extends MyItem{
                             centerBlock.getZ()-staffLevel+z);
                     if (getDistance(centerBlock, pos) <= staffLevel) transformBlock(to, world, pos);
                 }
+            }
+            world.playSound(player, centerBlock, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1.0F, random.nextFloat() * 0.4F + 1F);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
